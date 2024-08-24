@@ -7,15 +7,19 @@ const ResultPage = () => {
   const location = useLocation();
   const { name, answers } = location.state;
   const [letter, setLetter] = useState('');
+  const [loading, setLoading] = useState(true); // 로딩 상태 추가
   const resultRef = useRef(null);
 
   useEffect(() => {
     const fetchLetter = async () => {
+      setLoading(true); // 로딩 시작
       try {
         const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/love-letter`, { name, answers });
         setLetter(response.data.letter);
       } catch (error) {
         console.error('러브레터 생성에 실패했습니다:', error);
+      } finally {
+        setLoading(false); // 로딩 끝
       }
     };
 
@@ -59,10 +63,14 @@ const ResultPage = () => {
   return (
     <div>
       <h1>러브레터</h1>
-      <div ref={resultRef}>
-        <p>{letter}</p>
-      </div>
-      <button onClick={handleShare}>인스타그램 스토리에 공유하기</button>
+      {loading ? ( // 로딩 중일 때 표시
+        <p>로딩 중...</p>
+      ) : (
+        <div ref={resultRef}>
+          <p>{letter}</p>
+        </div>
+      )}
+      <button onClick={handleShare} disabled={loading}>인스타그램 스토리에 공유하기</button>
     </div>
   );
 };
