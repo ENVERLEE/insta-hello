@@ -34,9 +34,6 @@ const ResultPage = () => {
         const image = canvas.toDataURL('image/png');
         const shareUrl = 'intent://instagram.com/stories/share';
         const link = document.createElement('a');
-        link.href = image;
-        link.download = 'love-letter.png';
-        link.click();
         // 캡처한 이미지를 Blob으로 변환
         const response = await fetch(image);
         const blob = await response.blob();
@@ -47,10 +44,13 @@ const ResultPage = () => {
         const formData = new FormData();
         formData.append('file', file);
         formData.append('media_type', 'image/png');
-
+        
         const isMobile = /android|iPhone|iPad|iPod/i.test(navigator.userAgent);
         if (isMobile) {
           // 모바일 환경에서만 작동
+          link.href = image;
+          link.download = 'love-letter.png';
+          link.click();
           const instagramUrl = 'instagram://story-camera';
           window.location.href = instagramUrl;
         } else {
