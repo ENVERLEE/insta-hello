@@ -34,6 +34,7 @@ const ResultPage = () => {
         const image = canvas.toDataURL('image/png');
         
         // 이미지를 다운로드 링크로 변환
+        const shareUrl = intent://instagram.com/stories/share;
         const link = document.createElement('a');
         link.href = image;
         link.download = 'love-letter.png';
