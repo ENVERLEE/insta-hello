@@ -80,7 +80,7 @@ const ResultPage = () => {
   };
   return (
     <div>
-      <h1>{descriptor && descriptor !== '단어 요약이 없습니다.' ? `${descriptor}한 당신의 러브레터` : '러브레터'}</h1>
+      <h1>{descriptor && descriptor !== '단어 요약이 없습니다.' ? `${descriptor}, 당신의 러브레터` : '러브레터'}</h1>
       {loading ? (
         <p>로딩 중...</p>
       ) : error ? (
