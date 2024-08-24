@@ -33,27 +33,15 @@ const ResultPage = () => {
         const canvas = await html2canvas(resultRef.current);
         const image = canvas.toDataURL('image/png');
 
-        // 캡처한 이미지를 Blob으로 변환
-        const response = await fetch(image);
-        const blob = await response.blob();
-        const file = new File([blob], 'story.png', { type: blob.type });
+        // 이미지를 다운로드 링크로 변환
+        const link = document.createElement('a');
+        link.href = image;
+        link.download = 'love-letter.png';
+        link.click();
 
-        // Instagram 스토리 공유 URL 스키마 생성
-        const shareUrl = `intent://instagram.com/stories/share`;
+        // 사용자가 직접 Instagram 앱에서 이미지를 업로드하도록 유도
+        alert('이미지가 다운로드되었습니다. Instagram 스토리에서 직접 업로드해주세요.');
 
-        // 모바일 장치에서 Instagram으로 전환
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('media_type', 'image/png');
-
-        const isMobile = /android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-        if (isMobile) {
-          // 모바일 환경에서만 작동
-          const instagramUrl = `instagram://story-camera`;
-          window.location.href = instagramUrl;
-        } else {
-          alert('Instagram 스토리 공유는 모바일에서만 가능합니다.');
-        }
       } catch (error) {
         console.error('Instagram 스토리 공유에 실패했습니다:', error);
       }
@@ -76,4 +64,5 @@ const ResultPage = () => {
 };
 
 export default ResultPage;
+
 
