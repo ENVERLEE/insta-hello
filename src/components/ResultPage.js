@@ -21,21 +21,10 @@ const ResultPage = () => {
         // Log the full response to verify structure
         console.log('API Response:', response.data);
 
-        // Use regular expressions to extract content
-        const responseText = response.data;
+        setLetter(response.data.letter || ''); // Ensure default value if letter is undefined
+        setKeywords(response.data.keywords || []); // Ensure default value if keywords are undefined
+        setDescriptor(response.data.descriptor || ''); // Ensure default value if descriptor is undefined
 
-        // Extract the letter, keywords, and descriptor using regular expressions
-        const loveLetterMatch = responseText.match(/Love Letter:\s*(.*?)(?:\nKeywords:|$)/s);
-        const keywordsMatch = responseText.match(/Keywords:\s*([\s\S]*?)(?:\nDescriptor:|$)/);
-        const descriptorMatch = responseText.match(/Descriptor:\s*(.*)$/);
-
-        const letterContent = loveLetterMatch ? loveLetterMatch[1].trim() : 'No letter provided.';
-        const keywordsContent = keywordsMatch ? keywordsMatch[1].trim().split(',').map(keyword => keyword.trim()) : [];
-        const descriptorContent = descriptorMatch ? descriptorMatch[1].trim() : 'No descriptor provided.';
-
-        setLetter(letterContent);
-        setKeywords(keywordsContent);
-        setDescriptor(descriptorContent);
       } catch (error) {
         console.error('러브레터 생성에 실패했습니다:', error);
         setLetter(''); // Optionally set an error message or empty state
