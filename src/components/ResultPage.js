@@ -17,16 +17,16 @@ const ResultPage = () => {
       setLoading(true);
       try {
         const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/love-letter`, { name, answers });
-
+        
         // Log the full response to verify structure
-        console.log('API Response:', response.data);
+        console.log('API Response Text:', response.data);
 
         const responseText = response.data;
 
-        // Use regular expressions to extract content
-        const loveLetterMatch = responseText.match(/Love Letter:\s*([\s\S]*?)(?:\nKeywords:|$)/);
-        const keywordsMatch = responseText.match(/Keywords:\s*([\s\S]*?)(?:\nDescriptor:|$)/);
-        const descriptorMatch = responseText.match(/Descriptor:\s*(.*)$/);
+        // Extract the parts of the response using regular expressions
+        const loveLetterMatch = responseText.match(/1\. Love Letter:\s*([\s\S]*?)(?:\n2\. Keywords:|$)/);
+        const keywordsMatch = responseText.match(/2\. Keywords:\s*([\s\S]*?)(?:\n3\. Descriptor:|$)/);
+        const descriptorMatch = responseText.match(/3\. Descriptor:\s*(.*)$/);
 
         // Process the results
         const letterContent = loveLetterMatch ? loveLetterMatch[1].trim() : '러브레터를 불러오는 데 실패했습니다.';
