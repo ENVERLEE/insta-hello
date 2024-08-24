@@ -12,7 +12,7 @@ const ResultPage = () => {
   useEffect(() => {
     const fetchLetter = async () => {
       try {
-        const response = await axios.post('/api/love-letter', { name, answers });
+        const response = await axios.post('${process.env.REACT_APP_API_URL}/api/love-letter', { name, answers });
         setLetter(response.data.letter);
       } catch (error) {
         console.error('러브레터 생성에 실패했습니다:', error);
