@@ -32,12 +32,27 @@ const ResultPage = () => {
         // html2canvas로 콘텐츠 캡처
         const canvas = await html2canvas(resultRef.current);
         const image = canvas.toDataURL('image/png');
-
+        
         // 이미지를 다운로드 링크로 변환
         const link = document.createElement('a');
         link.href = image;
         link.download = 'love-letter.png';
-        link.click();
+        
+        
+        const isMobile = /android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        if (isMobile) {
+          // 모바일 환경에서만 작동
+          const instagramUrl = instagram://story-camera;
+          window.location.href = instagramUrl;
+          link.click();
+        } else {
+          alert('Instagram 스토리 공유는 모바일에서만 가능합니다.');
+        }
+        
+      } catch (error) {
+        console.error('Instagram 스토리 공유에 실패했습니다:', error);
+      }
+    }
 
         // 사용자가 직접 Instagram 앱에서 이미지를 업로드하도록 유도
         alert('이미지가 다운로드되었습니다. Instagram 스토리에서 직접 업로드해주세요.');
@@ -45,7 +60,7 @@ const ResultPage = () => {
       } catch (error) {
         console.error('Instagram 스토리 공유에 실패했습니다:', error);
       }
-    }
+    }    
   };
 
   return (
