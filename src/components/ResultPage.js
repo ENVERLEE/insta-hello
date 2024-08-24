@@ -32,7 +32,7 @@ const ResultPage = () => {
         // html2canvas로 콘텐츠 캡처
         const canvas = await html2canvas(resultRef.current);
         const image = canvas.toDataURL('image/png');
-        const shareUrl = intent://instagram.com/stories/share;
+        const shareUrl = 'intent://instagram.com/stories/share';
         const link = document.createElement('a');
         link.href = image;
         link.download = 'love-letter.png';
