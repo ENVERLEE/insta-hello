@@ -7,19 +7,23 @@ const ResultPage = () => {
   const location = useLocation();
   const { name, answers } = location.state;
   const [letter, setLetter] = useState('');
-  const [loading, setLoading] = useState(true); // 로딩 상태 추가
+  const [keywords, setKeywords] = useState([]); // 키워드 상태 추가
+  const [descriptor, setDescriptor] = useState(''); // 단어 요약 상태 추가
+  const [loading, setLoading] = useState(true);
   const resultRef = useRef(null);
 
   useEffect(() => {
     const fetchLetter = async () => {
-      setLoading(true); // 로딩 시작
+      setLoading(true);
       try {
         const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/love-letter`, { name, answers });
         setLetter(response.data.letter);
+        setKeywords(response.data.keywords || []); // 키워드 상태 업데이트
+        setDescriptor(response.data.descriptor || ''); // 단어 요약 상태 업데이트
       } catch (error) {
         console.error('러브레터 생성에 실패했습니다:', error);
       } finally {
-        setLoading(false); // 로딩 끝
+        setLoading(false);
       }
     };
 
@@ -29,28 +33,19 @@ const ResultPage = () => {
   const handleShare = async () => {
     if (resultRef.current) {
       try {
-        // html2canvas로 콘텐츠 캡처
         const canvas = await html2canvas(resultRef.current);
         const image = canvas.toDataURL('image/png');
-        const shareUrl = 'intent://instagram.com/stories/share';
-        const link = document.createElement('a');
-        // 캡처한 이미지를 Blob으로 변환
         const response = await fetch(image);
         const blob = await response.blob();
         const file = new File([blob], 'story.png', { type: blob.type });
 
-        // Instagram 스토리 공유 URL 스키마 생성
-        // 모바일 장치에서 Instagram으로 전환
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('media_type', 'image/png');
-        
+        const link = document.createElement('a');
+        link.href = image;
+        link.download = 'love-letter.png';
+        link.click();
+
         const isMobile = /android|iPhone|iPad|iPod/i.test(navigator.userAgent);
         if (isMobile) {
-          // 모바일 환경에서만 작동
-          link.href = image;
-          link.download = 'love-letter.png';
-          link.click();
           const instagramUrl = 'instagram://story-camera';
           window.location.href = instagramUrl;
         } else {
@@ -65,11 +60,27 @@ const ResultPage = () => {
   return (
     <div>
       <h1>러브레터</h1>
-      {loading ? ( // 로딩 중일 때 표시
+      {loading ? (
         <p>로딩 중...</p>
       ) : (
         <div ref={resultRef}>
           <p>{letter}</p>
+          {keywords.length > 0 && (
+            <div>
+              <h2>당신을 나타내는 단어들</h2>
+              <ul>
+                {keywords.map((keyword, index) => (
+                  <li key={index}>{keyword}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {descriptor && (
+            <div>
+              <h2>당신은</h2>
+              <p>{descriptor}</p>
+            </div>
+          )}
         </div>
       )}
       <button onClick={handleShare} disabled={loading}>인스타그램 스토리에 공유하기</button>
@@ -78,5 +89,3 @@ const ResultPage = () => {
 };
 
 export default ResultPage;
-
-
