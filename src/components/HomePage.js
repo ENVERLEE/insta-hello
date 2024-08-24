@@ -1,14 +1,28 @@
-import React, { useState } from 'react';
+// src/components/HomePage.js
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
-  const [name, setName] = useState('');
+  const [name, setName] = React.useState('');
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     navigate('/question/1', { state: { name } });
   };
+
+  useEffect(() => {
+    // 광고 스크립트를 동적으로 로드
+    const script = document.createElement('script');
+    script.src = "//t1.daumcdn.net/kas/static/ba.min.js";
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      // 컴포넌트 언마운트 시 스크립트 제거
+      document.body.removeChild(script);
+    };
+  }, []);
 
   return (
     <div>
@@ -23,6 +37,13 @@ const HomePage = () => {
         />
         <button type="submit">시작하기</button>
       </form>
+      {/* 광고 영역 */}
+      <ins className="kakao_ad_area"
+           style={{ display: 'none' }}
+           data-ad-unit="DAN-ovMWR6gtlt39CgYR"
+           data-ad-width="300"
+           data-ad-height="250">
+      </ins>
     </div>
   );
 };
