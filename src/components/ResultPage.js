@@ -10,37 +10,27 @@ const ResultPage = () => {
   const [keywords, setKeywords] = useState([]);
   const [descriptor, setDescriptor] = useState('');
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const resultRef = useRef(null);
 
   useEffect(() => {
     const fetchLetter = async () => {
       setLoading(true);
+      setError(null); // Reset error state before fetching
+
       try {
         const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/love-letter`, { name, answers });
-        
-        // Log the full response to verify structure
-        console.log('API Response Text:', response.data);
+        const { letter, keywords, descriptor } = response.data;
 
-        const responseText = response.data;
-
-        // Extract the parts of the response using regular expressions
-        const loveLetterMatch = responseText.match(/1\. Love Letter:\s*([\s\S]*?)(?:\n2\. Keywords:|$)/);
-        const keywordsMatch = responseText.match(/2\. Keywords:\s*([\s\S]*?)(?:\n3\. Descriptor:|$)/);
-        const descriptorMatch = responseText.match(/3\. Descriptor:\s*(.*)$/);
-
-        // Process the results
-        const letterContent = loveLetterMatch ? loveLetterMatch[1].trim() : '러브레터를 불러오는 데 실패했습니다.';
-        const keywordsContent = keywordsMatch ? keywordsMatch[1].trim().split(',').map(keyword => keyword.trim()) : [];
-        const descriptorContent = descriptorMatch ? descriptorMatch[1].trim() : '단어 요약이 없습니다.';
-
-        setLetter(letterContent);
-        setKeywords(keywordsContent);
-        setDescriptor(descriptorContent);
+        setLetter(letter || '러브레터를 불러오는 데 실패했습니다.');
+        setKeywords(keywords || []);
+        setDescriptor(descriptor || '단어 요약이 없습니다.');
       } catch (error) {
         console.error('러브레터 생성에 실패했습니다:', error);
         setLetter('러브레터를 불러오는 데 실패했습니다.');
         setKeywords([]);
         setDescriptor('단어 요약이 없습니다.');
+        setError('정보를 불러오는 데 실패했습니다. 나중에 다시 시도해 주세요.');
       } finally {
         setLoading(false);
       }
@@ -54,10 +44,6 @@ const ResultPage = () => {
       try {
         const canvas = await html2canvas(resultRef.current);
         const image = canvas.toDataURL('image/png');
-        const response = await fetch(image);
-        const blob = await response.blob();
-        const file = new File([blob], 'story.png', { type: blob.type });
-
         const link = document.createElement('a');
         link.href = image;
         link.download = 'love-letter.png';
@@ -82,6 +68,8 @@ const ResultPage = () => {
       <h1>{descriptor && descriptor !== '단어 요약이 없습니다.' ? `${descriptor}한 당신의 러브레터` : '러브레터'}</h1>
       {loading ? (
         <p>로딩 중...</p>
+      ) : error ? (
+        <p>{error}</p>
       ) : (
         <div ref={resultRef}>
           {letter ? (
