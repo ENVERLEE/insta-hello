@@ -7,8 +7,8 @@ const ResultPage = () => {
   const location = useLocation();
   const { name, answers } = location.state;
   const [letter, setLetter] = useState('');
-  const [keywords, setKeywords] = useState([]); // 키워드 상태 추가
-  const [descriptor, setDescriptor] = useState(''); // 단어 요약 상태 추가
+  const [keywords, setKeywords] = useState([]);
+  const [descriptor, setDescriptor] = useState('');
   const [loading, setLoading] = useState(true);
   const resultRef = useRef(null);
 
@@ -27,6 +27,9 @@ const ResultPage = () => {
 
       } catch (error) {
         console.error('러브레터 생성에 실패했습니다:', error);
+        setLetter(''); // Optionally set an error message or empty state
+        setKeywords([]);
+        setDescriptor('');
       } finally {
         setLoading(false);
       }
@@ -58,6 +61,7 @@ const ResultPage = () => {
         }
       } catch (error) {
         console.error('Instagram 스토리 공유에 실패했습니다:', error);
+        alert('Instagram 스토리 공유에 실패했습니다. 나중에 다시 시도해 주세요.');
       }
     }
   };
@@ -69,7 +73,14 @@ const ResultPage = () => {
         <p>로딩 중...</p>
       ) : (
         <div ref={resultRef}>
-          {letter ? <p>{letter}</p> : <p>러브레터를 불러오는 데 실패했습니다.</p>}
+          {letter ? (
+            <div>
+              <p>{letter}</p>
+            </div>
+          ) : (
+            <p>러브레터를 불러오는 데 실패했습니다.</p>
+          )}
+
           {keywords.length > 0 ? (
             <div>
               <h2>키워드</h2>
@@ -82,6 +93,7 @@ const ResultPage = () => {
           ) : (
             <p>키워드가 없습니다.</p>
           )}
+
           {descriptor ? (
             <div>
               <h2>한 단어 요약</h2>
