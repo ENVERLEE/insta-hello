@@ -17,9 +17,14 @@ const ResultPage = () => {
       setLoading(true);
       try {
         const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/love-letter`, { name, answers });
-        setLetter(response.data.letter);
-        setKeywords(response.data.keywords || []); // 키워드 상태 업데이트
-        setDescriptor(response.data.descriptor || ''); // 단어 요약 상태 업데이트
+        
+        // Log the full response to verify structure
+        console.log('API Response:', response.data);
+
+        setLetter(response.data.letter || ''); // Ensure default value if letter is undefined
+        setKeywords(response.data.keywords || []); // Ensure default value if keywords are undefined
+        setDescriptor(response.data.descriptor || ''); // Ensure default value if descriptor is undefined
+
       } catch (error) {
         console.error('러브레터 생성에 실패했습니다:', error);
       } finally {
@@ -64,22 +69,26 @@ const ResultPage = () => {
         <p>로딩 중...</p>
       ) : (
         <div ref={resultRef}>
-          <p>{letter}</p>
-          {keywords.length > 0 && (
+          {letter ? <p>{letter}</p> : <p>러브레터를 불러오는 데 실패했습니다.</p>}
+          {keywords.length > 0 ? (
             <div>
-              <h2>당신을 나타내는 단어들</h2>
+              <h2>키워드</h2>
               <ul>
                 {keywords.map((keyword, index) => (
                   <li key={index}>{keyword}</li>
                 ))}
               </ul>
             </div>
+          ) : (
+            <p>키워드가 없습니다.</p>
           )}
-          {descriptor && (
+          {descriptor ? (
             <div>
-              <h2>당신은</h2>
+              <h2>한 단어 요약</h2>
               <p>{descriptor}</p>
             </div>
+          ) : (
+            <p>단어 요약이 없습니다.</p>
           )}
         </div>
       )}
