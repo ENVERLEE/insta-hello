@@ -51,7 +51,7 @@ const ResultPage = () => {
         const isMobile = /android|iPhone|iPad|iPod/i.test(navigator.userAgent);
         if (isMobile) {
           // 모바일 환경에서만 작동
-          const instagramUrl = instagram://story-camera;
+          const instagramUrl = 'instagram://story-camera';
           window.location.href = instagramUrl;
         } else {
           alert('Instagram 스토리 공유는 모바일에서만 가능합니다.');
