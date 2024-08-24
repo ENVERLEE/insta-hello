@@ -21,27 +21,26 @@ const ResultPage = () => {
         // Log the full response to verify structure
         console.log('API Response:', response.data);
 
-        // Use regular expressions to extract content
         const responseText = response.data;
 
-        // Extract the letter, keywords, and descriptor using regular expressions
-        const loveLetterMatch = responseText.match(/Love Letter:\s*([\s\S]*?)(?:\n 2. Keywords:|$)/);
-        const keywordsMatch = responseText.match(/Keywords:\s*([\s\S]*?)(?:\n 3. Descriptor:|$)/);
+        // Use regular expressions to extract content
+        const loveLetterMatch = responseText.match(/Love Letter:\s*([\s\S]*?)(?:\nKeywords:|$)/);
+        const keywordsMatch = responseText.match(/Keywords:\s*([\s\S]*?)(?:\nDescriptor:|$)/);
         const descriptorMatch = responseText.match(/Descriptor:\s*(.*)$/);
 
         // Process the results
-        const letterContent = loveLetterMatch ? loveLetterMatch[1].trim() : 'No letter provided.';
+        const letterContent = loveLetterMatch ? loveLetterMatch[1].trim() : '러브레터를 불러오는 데 실패했습니다.';
         const keywordsContent = keywordsMatch ? keywordsMatch[1].trim().split(',').map(keyword => keyword.trim()) : [];
-        const descriptorContent = descriptorMatch ? descriptorMatch[1].trim() : 'No descriptor provided.';
+        const descriptorContent = descriptorMatch ? descriptorMatch[1].trim() : '단어 요약이 없습니다.';
 
         setLetter(letterContent);
         setKeywords(keywordsContent);
         setDescriptor(descriptorContent);
       } catch (error) {
         console.error('러브레터 생성에 실패했습니다:', error);
-        setLetter(''); // Optionally set an error message or empty state
+        setLetter('러브레터를 불러오는 데 실패했습니다.');
         setKeywords([]);
-        setDescriptor('');
+        setDescriptor('단어 요약이 없습니다.');
       } finally {
         setLoading(false);
       }
@@ -80,7 +79,7 @@ const ResultPage = () => {
 
   return (
     <div>
-      <h1>{descriptor} 당신을 위한 러브레터</h1>
+      <h1>{descriptor ? `${descriptor}한 당신의 러브레터` : '러브레터'}</h1>
       {loading ? (
         <p>로딩 중...</p>
       ) : (
@@ -108,8 +107,8 @@ const ResultPage = () => {
 
           {descriptor ? (
             <div>
-              <h2></h2>
-              <p></p>
+              <h2>한 단어 요약</h2>
+              <p>{descriptor}</p>
             </div>
           ) : (
             <p>단어 요약이 없습니다.</p>
