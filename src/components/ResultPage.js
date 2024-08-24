@@ -43,8 +43,6 @@ const ResultPage = () => {
         const file = new File([blob], 'story.png', { type: blob.type });
 
         // Instagram 스토리 공유 URL 스키마 생성
-        const shareUrl = intent://instagram.com/stories/share;
-
         // 모바일 장치에서 Instagram으로 전환
         const formData = new FormData();
         formData.append('file', file);
