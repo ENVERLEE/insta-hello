@@ -20,11 +20,27 @@ const ResultPage = () => {
 
       try {
         const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/love-letter`, { name, answers });
-        const { letter, keywords, descriptor } = response.data;
 
-        setLetter(letter || '러브레터를 불러오는 데 실패했습니다.');
-        setKeywords(keywords || []);
-        setDescriptor(descriptor || '단어 요약이 없습니다.');
+        // Log the entire response for debugging
+        console.log('API Response:', response);
+
+        // Extract data from response
+        const { letter: fullLetter, keywords: rawKeywords, descriptor } = response.data;
+
+        // Extract letter content up to "2. Keywords:" and remove "3. Descriptor:" part
+        const [letterPart] = fullLetter.split('2. Keywords:');
+        const cleanLetterContent = letterPart.replace(/3\. Descriptor:.*$/, '').trim();
+
+        // Ensure keywords do not include the descriptor
+        const keywordsContent = rawKeywords ? rawKeywords.filter(keyword => keyword !== descriptor) : [];
+
+        // Ensure descriptor has a default value if not present
+        const descriptorContent = descriptor || '단어 요약이 없습니다.';
+
+        // Update state
+        setLetter(cleanLetterContent || '러브레터를 불러오는 데 실패했습니다.');
+        setKeywords(keywordsContent);
+        setDescriptor(descriptorContent);
       } catch (error) {
         console.error('러브레터 생성에 실패했습니다:', error);
         setLetter('러브레터를 불러오는 데 실패했습니다.');
@@ -62,7 +78,6 @@ const ResultPage = () => {
       }
     }
   };
-
   return (
     <div>
       <h1>{descriptor && descriptor !== '단어 요약이 없습니다.' ? `${descriptor}한 당신의 러브레터` : '러브레터'}</h1>
