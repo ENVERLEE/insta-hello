@@ -1,30 +1,33 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import './QuestionPage.css'; // CSS 파일을 추가해 스타일링
 
+// 질문 리스트
 const questions = [
-  "당신이 가장 좋아하는 시간대는?",
-  "세상에서 가장 좋아하는 냄새는?",
-  "당신이 꿈꾸는 여행지는 어디인가요?",
-  "특별한 날에 가장 듣고 싶은 노래는?",
-  "가장 좋아하는 계절은?",
-  "만약 하루 동안 동물이 될 수 있다면, 어떤 동물이 되고 싶나요?",
-  "스트레스를 풀 때 가장 자주 하는 행동은?",
-  "어릴 적 꿈꿨던 직업은 무엇인가요?",
-  "인생에서 가장 잊지 못할 순간은?",
-  "당신이 가장 사랑하는 사람에게 하고 싶은 한마디는?",
+  "데이트 약속이 생겼을 때, 당신의 첫 반응은?",
+  "연애에서 가장 중요한 건?",
+  "연인이 서프라이즈 이벤트를 준비했다면, 당신의 반응은?",
+  "기념일이 다가오고 있어요. 당신의 준비는?",
+  "연인과의 주말 계획이 취소됐다면?",
+  "이상적인 데이트 장소는?",
+  "연애 초반, 마음 표현은?",
+  "연인이 멀리 여행을 간다면 당신의 마음은?",
+  "둘만의 시간을 보낼 때 당신이 더 좋아하는 건?",
+  "연인이 마음에 상처를 입었을 때 당신의 행동은?",
 ];
 
+// 선택지 리스트
 const choices = [
-  ["아침", "점심", "저녁", "밤"],
-  ["바다 냄새", "커피 향", "비 냄새", "숲 속 향기"],
-  ["파리", "몰디브", "도쿄", "뉴욕"],
-  ["달콤한 팝송", "신나는 록", "잔잔한 발라드", "재즈"],
-  ["봄", "여름", "가을", "겨울"],
-  ["고양이", "강아지", "새", "사자"],
-  ["산책", "음악 듣기", "명상", "독서"],
-  ["우주비행사", "의사", "예술가", "선생님"],
-  ["졸업식", "첫사랑", "가족과의 여행", "성취감 느낄 때"],
-  ["늘 사랑해", "항상 고마워", "당신은 나의 영웅", "함께해서 행복해"],
+  ["설레면서도 계획부터 세운다", "일단 분위기를 내버려둔다", "약간 긴장된다"],
+  ["서로를 이해하고 공감하는 시간", "함께하는 모든 순간을 즐기는 것", "꾸준한 관심과 애정 표현"],
+  ["감동! 완전 설레고 감사해", "예상을 벗어나 당황하지만 고마워", "약간 부담스럽지만 기뻐할래"],
+  ["깜짝 이벤트나 선물을 고민 중", "특별한 계획보단 분위기를 중시해", "간단한 선물로 진심을 전할래"],
+  ["아쉽지만 대체할 계획을 생각한다", "집에서 쉬면서 재정비한다", "조금 우울하지만 괜찮아"],
+  ["예쁜 카페나 분위기 좋은 레스토랑", "자연 속 산책", "사람 많은 곳보단 조용한 공간"],
+  ["솔직하게 바로 표현한다", "천천히 반응을 보면서 다가간다", "신중하게 고민 후 표현한다"],
+  ["자유 시간을 즐긴다", "살짝 쓸쓸하지만 응원한다", "자주 연락하며 그리움을 달랜다"],
+  ["활동적인 데이트", "소파에 누워 이야기 나누기", "깊이 있는 대화 나누기"],
+  ["빨리 위로하고 해결책을 찾는다", "차분하게 들어주며 공감한다", "옆에서 조용히 함께 있는다"],
 ];
 
 const QuestionPage = () => {
@@ -45,24 +48,23 @@ const QuestionPage = () => {
   };
 
   return (
-    <div>
+    <div className="question-page">
       <h1>{questions[questionIndex]}</h1>
-      {choices[questionIndex].map((choice, index) => (
-        <div key={index}>
-          <input
-            type="radio"
-            id={`choice-${index}`}
-            name="choice"
-            value={choice}
-            checked={answer === choice}
-            onChange={(e) => setAnswer(e.target.value)}
-          />
-          <label htmlFor={`choice-${index}`}>{choice}</label>
-        </div>
-      ))}
-      <button onClick={handleNext} disabled={!answer}>다음</button>
+      <div className="choices-container">
+        {choices[questionIndex].map((choice, index) => (
+          <button
+            key={index}
+            className={`choice-button ${answer === choice ? 'selected' : ''}`}
+            onClick={() => setAnswer(choice)}
+          >
+            {choice}
+          </button>
+        ))}
+      </div>
+      <button className="next-button" onClick={handleNext} disabled={!answer}>다음</button>
     </div>
   );
 };
 
 export default QuestionPage;
+
