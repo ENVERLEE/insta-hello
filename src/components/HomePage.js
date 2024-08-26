@@ -27,15 +27,15 @@ const HomePage = () => {
   return (
     <div>
       <ins class="kakao_ad_area" style="display:none;"
-data-ad-unit = "DAN-1JeRk3itLRc0CSwI"
-data-ad-width = "250"
-data-ad-height = "250"></ins>
-<script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
-    <ins class="kakao_ad_area" style="display:none;"
-data-ad-unit = "DAN-IZJJcewdVXvL0BZF"
-data-ad-width = "320"
-data-ad-height = "50"></ins>
-<script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+        data-ad-unit = "DAN-1JeRk3itLRc0CSwI"
+        data-ad-width = "250"
+        data-ad-height = "250"></ins>
+      <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+      <ins class="kakao_ad_area" style="display:none;"
+        data-ad-unit = "DAN-IZJJcewdVXvL0BZF"
+        data-ad-width = "320"
+        data-ad-height = "50"></ins>
+      <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
       <h1>인스타 감성 설문</h1>
       <form onSubmit={handleSubmit}>
         <label>이름을 입력하세요:</label>
@@ -47,20 +47,20 @@ data-ad-height = "50"></ins>
         />
         <button type="submit">시작하기</button>
         <ins class="kakao_ad_area" style="display:none;"
-data-ad-unit = "DAN-ovMWR6gtlt39CgYR"
-data-ad-width = "300"
-data-ad-height = "250"></ins>
-<script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+          data-ad-unit = "DAN-ovMWR6gtlt39CgYR"
+          data-ad-width = "300"
+          data-ad-height = "250"></ins>
+        <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
         <ins class="kakao_ad_area" style="display:none;"
-data-ad-unit = "DAN-WUbgcrIFWFlvVoWO"
-data-ad-width = "320"
-data-ad-height = "50"></ins>
-<script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+          data-ad-unit = "DAN-WUbgcrIFWFlvVoWO"
+          data-ad-width = "320"
+          data-ad-height = "50"></ins>
+        <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
         <ins class="kakao_ad_area" style="display:none;"
-data-ad-unit = "DAN-xv20fHZyXcJ5r2li"
-data-ad-width = "320"
-data-ad-height = "100"></ins>
-<script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+          data-ad-unit = "DAN-xv20fHZyXcJ5r2li"
+          data-ad-width = "320"
+          data-ad-height = "100"></ins>
+        <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
       </form>
     </div>
   );
