@@ -26,11 +26,6 @@ const HomePage = () => {
   return (
     <div>
       <ins className="kakao_ad_area"
-        data-ad-unit="DAN-1JeRk3itLRc0CSwI"
-        data-ad-width="250"
-        data-ad-height="250"></ins>
-
-      <ins className="kakao_ad_area"
         data-ad-unit="DAN-IZJJcewdVXvL0BZF"
         data-ad-width="320"
         data-ad-height="50"></ins>
@@ -46,20 +41,18 @@ const HomePage = () => {
         />
         <button type="submit">시작하기</button>
 
-        <ins className="kakao_ad_area"
-          data-ad-unit="DAN-ovMWR6gtlt39CgYR"
-          data-ad-width="300"
-          data-ad-height="250"></ins>
-
-        <ins className="kakao_ad_area"
-          data-ad-unit="DAN-WUbgcrIFWFlvVoWO"
-          data-ad-width="320"
-          data-ad-height="50"></ins>
-
-        <ins className="kakao_ad_area"
-          data-ad-unit="DAN-xv20fHZyXcJ5r2li"
-          data-ad-width="320"
-          data-ad-height="100"></ins>
+    <ins className="kakao_ad_area"
+      data-ad-unit="DAN-ovMWR6gtlt39CgYR"
+      data-ad-width="300"
+      data-ad-height="250"></ins>
+    <ins className="kakao_ad_area"
+      data-ad-unit="DAN-WUbgcrIFWFlvVoWO"
+      data-ad-width="320"
+      data-ad-height="50"></ins>
+    <ins className="kakao_ad_area"
+      data-ad-unit="DAN-xv20fHZyXcJ5r2li"
+      data-ad-width="320"
+      data-ad-height="100"></ins>
       </form>
     </div>
   );
