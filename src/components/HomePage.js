@@ -40,6 +40,7 @@ const HomePage = () => {
           required
         />
         <button type="submit">시작하기</button>
+          </form>
 
     <ins className="kakao_ad_area"
       data-ad-unit="DAN-ovMWR6gtlt39CgYR"
@@ -53,7 +54,6 @@ const HomePage = () => {
       data-ad-unit="DAN-xv20fHZyXcJ5r2li"
       data-ad-width="320"
       data-ad-height="100"></ins>
-      </form>
     </div>
   );
 };
