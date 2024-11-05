@@ -5,7 +5,7 @@ import App from './App';
 import { Toaster } from '@/components/ui/toaster';
 
 // TailwindCSS import
-import './styles/globals.css';
+import './globals.css';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
